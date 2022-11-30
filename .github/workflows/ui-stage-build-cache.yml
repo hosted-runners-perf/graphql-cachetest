@@ -1,0 +1,28 @@
+name: "UI Build Cache"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+jobs:
+  build-ui:
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+            os:
+              - ubuntu-latest
+              - macos-latest
+              - windows-2022
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          cache: yarn
+      - name: UI build
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+        working-directory: packages/graphql-toolbox

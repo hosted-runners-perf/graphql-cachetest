@@ -1,9 +1,9 @@
-name: "UI Build"
+name: "UI Build No Cache"
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/15 * * * *"
 
 jobs:
   build-ui:
@@ -22,6 +22,6 @@ jobs:
           node-version: lts/*
       - name: UI build
         run: |
-          yarn
+          yarn install --frozen-lockfile
           yarn build
         working-directory: packages/graphql-toolbox
